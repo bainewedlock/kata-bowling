@@ -6,32 +6,34 @@ class Bowling
     @rolls.push pins
   end
   def score
-    total = 0
-    frame_index = 0
+    @frame_index = 0
+    @total = 0
     10.times do
-      remaining_rolls = @rolls.drop(frame_index)
-      if strike_at? remaining_rolls
-        skip = 1
-        bonus = 2
-      elsif spare_at? remaining_rolls
-        skip = 2
-        bonus = 1
-      else
-        skip = 2
-        bonus = 0
-      end
-      total += sum(remaining_rolls, skip + bonus)
-      frame_index += skip
+      calc_frame
     end
-    total
+    @total
   end
-  def strike_at?(rolls)
-    sum(rolls, 1) == 10
+  def calc_frame
+    if strike?
+      rolls_in_frame = 1
+      bonus_rolls = 2
+    elsif spare?
+      rolls_in_frame = 2
+      bonus_rolls = 1
+    else
+      rolls_in_frame = 2
+      bonus_rolls = 0
+    end
+    @total += sum_of_next(rolls_in_frame + bonus_rolls)
+    @frame_index += rolls_in_frame
   end
-  def spare_at?(rolls)
-    sum(rolls, 2) == 10
+  def strike?
+    sum_of_next(1) == 10
   end
-  def sum(rolls, n)
-    rolls.take(n).sum
+  def spare?
+    sum_of_next(2) == 10
+  end
+  def sum_of_next(n)
+    @rolls.drop(@frame_index).take(n).sum
   end
 end
