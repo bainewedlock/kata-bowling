@@ -1,6 +1,6 @@
 
 ## Description
-A simple Bowling Kata solution. (using recursion for a change)
+A simple Bowling Kata solution.
 
 
 ## Links
