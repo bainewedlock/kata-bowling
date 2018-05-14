@@ -1,0 +1,1 @@
+Simple Bowling Kata solution.
